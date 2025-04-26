@@ -8,11 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen p-4" style="background-image: url('https://montgomeryparks.org/wp-content/uploads/2022/09/Friends-of-the-Agricultural-History-Farm-Park.jpg'); background-size: cover; background-position: center;">
     <div class="w-full max-w-sm">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="bg-white px-6 py-4 border-b">
-                <h4 class="text-center text-2xl font-semibold text-gray-800">Login PanenHub</h4>
+            <div class="bg-green-900 px-6 py-4 border-b">
+                <h4 class="text-center text-2xl font-semibold text-white">Login PanenHub</h4>
             </div>
             <div class="p-6">
                 {{-- Error Messages --}}
@@ -64,7 +64,7 @@
                             name="remember"
                             type="checkbox"
                             {{ old('remember') ? 'checked' : '' }}
-                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                            class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" />
                         <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
                     </div>
 
@@ -72,7 +72,7 @@
                     <div>
                         <button
                             type="submit"
-                            class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+                            class="w-full py-2 px-4 bg-green-900 text-white font-semibold rounded-lg hover:bg-green-700 transition">
                             Login
                         </button>
                     </div>
