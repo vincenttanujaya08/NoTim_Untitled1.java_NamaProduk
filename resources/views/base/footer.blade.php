@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <a href="https://wa.me/6285856910223">
+        <img src="public\whatsapp_icon.png" alt="icon">
+    </a>
 </body>
 </html>
