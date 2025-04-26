@@ -37,11 +37,11 @@
     <h2 class="text-2xl font-semibold">Aksi Cepat</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <a href="{{ route('buyer.katalog') }}"
-            class="block bg-blue-600 text-white rounded-lg shadow p-6 text-center hover:bg-blue-700">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-800">
             📦<br><span class="mt-2 block font-medium">Lihat Katalog</span>
         </a>
         <a href="{{ route('buyer.orders.index') }}"
-            class="block bg-green-600 text-white rounded-lg shadow p-6 text-center hover:bg-green-700">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-800">
             📜<br><span class="mt-2 block font-medium">Riwayat Pesanan</span>
         </a>
     </div>

@@ -12,7 +12,7 @@
                 <th class="px-4 py-2">#Order</th>
                 <th class="px-4 py-2">Tanggal</th>
                 <th class="px-4 py-2">Total Rp</th>
-                <th class="px-4 py-2">Status</th>
+            
             </tr>
         </thead>
         <tbody>
@@ -21,7 +21,6 @@
                 <td class="px-4 py-2">{{ $o->id }}</td>
                 <td class="px-4 py-2">{{ $o->order_date }}</td>
                 <td class="px-4 py-2">Rp {{ number_format($o->total_amount,0,',','.') }}</td>
-                <td class="px-4 py-2">{{ $o->status }}</td>
             </tr>
             @endforeach
         </tbody>

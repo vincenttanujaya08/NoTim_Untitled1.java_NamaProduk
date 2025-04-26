@@ -82,7 +82,7 @@
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold text-gray-700">Kelola Koperasi</h2>
         <a href="{{ route('cooperatives.create') }}"
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            class="bg-green-950 text-white px-4 py-2 rounded hover:bg-green-800">
             Tambah Koperasi
         </a>
     </div>
@@ -127,7 +127,7 @@
         @csrf
         <button
             type="submit"
-            class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-900">
+            class="bg-green-950 text-white px-6 py-2 rounded hover:bg-green-800">
             Logout
         </button>
     </form>

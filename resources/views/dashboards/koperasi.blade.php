@@ -55,23 +55,23 @@
     <h2 class="text-2xl font-semibold text-gray-700">Navigasi Cepat</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <a href="{{ route('koperasi.farmers.index') }}"
-            class="block bg-blue-600 text-white rounded-lg shadow p-6 text-center hover:bg-blue-700 transition">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-700 transition">
             👥<br><span class="mt-2 block font-medium">Kelola Petani</span>
         </a>
         <a href="{{ route('koperasi.stocks.index') }}"
-            class="block bg-indigo-600 text-white rounded-lg shadow p-6 text-center hover:bg-indigo-700 transition">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-700 transition">
             📊<br><span class="mt-2 block font-medium">Kelola Stok</span>
         </a>
         <a href="{{ route('koperasi.orders.index') }}"
-            class="block bg-yellow-600 text-white rounded-lg shadow p-6 text-center hover:bg-yellow-700 transition">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-700 transition">
             📝<br><span class="mt-2 block font-medium">Kelola Pesanan</span>
         </a>
         <a href="{{ route('koperasi.reports.harvest') }}"
-            class="block bg-green-600 text-white rounded-lg shadow p-6 text-center hover:bg-green-700 transition">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-700 transition">
             📅<br><span class="mt-2 block font-medium">Laporan Panen</span>
         </a>
         <a href="{{ route('koperasi.reports.finance') }}"
-            class="block bg-pink-600 text-white rounded-lg shadow p-6 text-center hover:bg-pink-700 transition">
+            class="block bg-green-950 text-white rounded-lg shadow p-6 text-center hover:bg-green-700 transition">
             📈<br><span class="mt-2 block font-medium">Laporan Keuangan</span>
         </a>
     </div>

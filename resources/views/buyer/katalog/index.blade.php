@@ -18,7 +18,7 @@
         <template x-for="item in filteredCommodities" :key="item.commodity_id">
             <div class="bg-white rounded-lg shadow hover:shadow-lg transition flex flex-col">
                 {{-- Header --}}
-                <div class="bg-indigo-600 px-5 py-4">
+                <div class="bg-green-950 px-5 py-4">
                     <h2 class="text-xl font-semibold text-white text-center" x-text="item.commodity"></h2>
                 </div>
 
@@ -65,7 +65,7 @@
                 <div class="bg-gray-50 px-5 py-4 text-center">
                     <button
                         @click="addToCart(item.commodity_id)"
-                        class="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition">
+                        class="inline-flex items-center px-4 py-2 bg-green-800 text-white font-medium rounded-md hover:bg-green-700 transition">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m4-9l2 9" />
@@ -85,7 +85,7 @@
 
     {{-- Keranjang Front-end --}}
     <div class="mt-12 max-w-4xl mx-auto bg-white rounded-lg shadow overflow-hidden">
-        <div class="bg-indigo-800 px-6 py-4">
+        <div class="bg-green-950 px-6 py-4">
             <h3 class="text-white font-semibold">🛒 Keranjang Anda</h3>
         </div>
         <table class="w-full divide-y divide-gray-200">
@@ -120,7 +120,7 @@
         <div class="p-6 bg-gray-50 text-right">
             <button
                 @click="checkout()"
-                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition">
+                class="inline-flex items-center px-4 py-2 bg-green-800 text-white font-medium rounded-md hover:bg-green-700 transition">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h18v4H3V3zm0 8h18v10H3V11zM7 15h5v2H7v-2z" />

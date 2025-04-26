@@ -68,7 +68,7 @@
                 <form action="{{ route('buyer.orders.repeat', $o->id) }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition">
+                        class="px-4 py-2 bg-green-800 text-white text-sm rounded hover:bg-green-700 transition">
                         Repeat
                     </button>
                 </form>

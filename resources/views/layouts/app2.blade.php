@@ -15,12 +15,12 @@
       @apply w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center;
     }
     .sidebar-link {
-      @apply px-6 py-4 text-gray-200 hover:bg-slate-700 hover:text-white
+      @apply px-6 py-4 text-gray-200 hover:bg-green-950 hover:text-white
              transition-colors duration-200 border-l-4 border-transparent
-             hover:border-blue-500;
+             hover:border-green-950;
     }
     .sidebar-link.active {
-      @apply bg-slate-700 border-blue-500;
+      @apply bg-green-950 border-green-950;
     }
   }
   </style>
@@ -31,7 +31,7 @@
 <body class="bg-gray-100 transition-all duration-300">
 
     {{-- Navbar --}}
-    <nav class="bg-slate-800 text-white p-4 shadow-md fixed w-full z-50">
+    <nav class="bg-green-950 text-white p-4 shadow-md fixed w-full z-50">
         <div class="flex items-center">
             <button id="hamburger"
                 class="flex flex-col justify-between h-6 w-6 focus:outline-none mr-4 group">
@@ -45,7 +45,7 @@
 
     {{-- Sidebar --}}
     <div id="sidebar"
-        class="fixed top-0 left-0 h-full w-64 bg-slate-900 shadow-lg z-40
+        class="fixed top-0 left-0 h-full w-64 bg-green-950 shadow-lg z-40
               transform -translate-x-full transition-transform duration-300 ease-in-out pt-16 flex flex-col">
         <a href="{{ route('koperasi.dashboard') }}"
             class="sidebar-link {{ request()->routeIs('koperasi.dashboard') ? 'active' : '' }}">
