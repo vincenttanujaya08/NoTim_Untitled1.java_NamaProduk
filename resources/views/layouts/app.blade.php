@@ -97,6 +97,10 @@
     </script>
 
     @stack('scripts') {{-- additional page scripts --}}
+    <div class="bg-green-950 p-10">
+        <a href="https://wa.me/6289520075942" class="text-white text-3xl mx-3">✆</a>
+        <a href="mailto:PanenHubAdmin@example.com" class="text-white text-3xl mx-3">🖂</a>
+    </div>
 </body>
 
 </html>
