@@ -6,7 +6,7 @@
 @section('content')
 <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden mx-auto mt-12">
     <!-- Header -->
-    <div class="bg-blue-600 p-5">
+    <div class="bg-green-950 p-5">
         <h1 class="text-white text-2xl font-semibold">Tambah Koperasi Baru</h1>
     </div>
 
@@ -45,7 +45,7 @@
                     id="name"
                     value="{{ old('name') }}"
                     required
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="Masukkan nama koperasi" />
             </div>
 
@@ -59,7 +59,7 @@
                     id="address"
                     rows="4"
                     required
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="Masukkan alamat lengkap">{{ old('address') }}</textarea>
             </div>
 
@@ -70,7 +70,7 @@
                     Batal
                 </a>
                 <button type="submit"
-                    class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    class="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700 transition">
                     Simpan
                 </button>
             </div>

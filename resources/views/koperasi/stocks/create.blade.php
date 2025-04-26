@@ -41,7 +41,7 @@
             <a href="{{ route('koperasi.stocks.index') }}"
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</a>
             <button type="submit"
-                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+                class="px-4 py-2 bg-green-800 text-white rounded hover:bg-green-700">Simpan</button>
         </div>
     </form>
 </div>
