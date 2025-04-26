@@ -78,11 +78,11 @@
             overlay.classList.toggle('visible');
             overlay.classList.toggle('invisible');
             
-            if (sidebar.classList.contains('translate-x-0')) {
-                content.classList.add('ml-64');
-            } else {
-                content.classList.remove('ml-64');
-            }
+            // if (sidebar.classList.contains('translate-x-0')) {
+            //     content.classList.add('ml-64');
+            // } else {
+            //     content.classList.remove('ml-64');
+            // }
         });
 
         overlay.addEventListener('click', () => {
