@@ -27,12 +27,12 @@
         <div class="flex items-center pl-4">
             <!-- Hamburger Button di Kiri -->
             <button id="hamburger" class="flex flex-col justify-between h-6 w-6 focus:outline-none mr-4 group">
-                <span class="hamburger-line group-[.active]:translate-y-[11px] group-[.active]:rotate-[45deg]"></span>
+                <span class="hamburger-line group-[.active]:translate-y-[5.8px] group-[.active]:rotate-[23deg]"></span>
                 <span class="hamburger-line group-[.active]:opacity-0"></span>
-                <span class="hamburger-line group-[.active]:-translate-y-[11px] group-[.active]:-rotate-[45deg]"></span>
+                <span class="hamburger-line group-[.active]:-translate-y-[5.8px] group-[.active]:-rotate-[23deg]"></span>
             </button>
             
-            <div class="text-xl font-bold">Panen Hub</div>
+            <div class="text-3xl font-bold">Panen Hub</div>
         </div>
     </nav>
 
@@ -40,16 +40,16 @@
     <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-900 shadow-lg z-40 transform -translate-x-full transition-transform duration-300 ease-in-out pt-16">
         <div class="grid-rows-4 w-64">
           <div class="hover:bg-blue-600 py-2">
-            <a href="#" class="text-white ml-8">Home</a>
+            <a href="home" class="text-white ml-8">Home</a>
           </div>
           <div class="hover:bg-blue-600 py-2">
-            <a href="#" class="text-white ml-8">Katalog</a>
+            <a href="katalog" class="text-white ml-8">Katalog</a>
           </div>
           <div class="hover:bg-blue-600 py-2">
-            <a href="#" class="text-white ml-8">Login</a>
+            <a href="login" class="text-white ml-8">Login</a>
           </div>
           <div class="hover:bg-blue-600 py-2">
-            <a href="#" class="text-white ml-8">Sign Up</a>
+            <a href="signup" class="text-white ml-8">Sign Up</a>
           </div>
         </div>
       </div>

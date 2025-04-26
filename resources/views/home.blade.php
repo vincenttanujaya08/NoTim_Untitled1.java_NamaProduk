@@ -1,7 +1,14 @@
 @extends('base.layout')
 @section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
 <body class="bg-gray-100 text-gray-900">
-    <main class="mt-8" id="home">
+    <main class="" id="home">
         <section class="bg-gray-800 text-white text-center py-20">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">PanenHub</h1>
             <p class = "text-xl mb-6">Welcome to PanenHub</p>
@@ -32,6 +39,7 @@
                 </div>
             </div>
         </section>
+        
     </main>
 </body>
 </html>
