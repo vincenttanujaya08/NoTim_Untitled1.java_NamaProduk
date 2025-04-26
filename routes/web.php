@@ -17,3 +17,7 @@ Route::get('/signup', function () {
 Route::get('/katalog', function () {
     return view('katalog');
 });
+
+Route::get('/footer', function () {
+    return view('base.footer');
+});
