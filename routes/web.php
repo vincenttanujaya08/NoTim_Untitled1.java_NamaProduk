@@ -1,27 +1,34 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SuperController;
+use App\Http\Controllers\KoperasiController;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\FarmerController;
+use App\Http\Controllers\BuyerController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Tampilkan form login
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
-Route::get('/home', function () {
-    return view('home');
-});
+// Proses login
+Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Proses logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/signup', function () {
-    return view('signup');
-});
+// Dashboard per role (cek di controller)
+Route::get('/super/dashboard', [SuperController::class, 'dashboard'])->name('super.dashboard');
+Route::get('/koperasi/dashboard', [KoperasiController::class, 'dashboard'])->name('koperasi.dashboard');
+Route::get('/field/dashboard', [FieldController::class, 'dashboard'])->name('field.dashboard');
+Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard');
+Route::get('/buyer/dashboard', [BuyerController::class, 'dashboard'])->name('buyer.dashboard');
 
-Route::get('/katalog', function () {
-    return view('katalog');
-});
+// crud koperasi
+Route::get('cooperatives/create', [SuperController::class, 'createCooperative'])
+    ->name('cooperatives.create');
+Route::post('cooperatives', [SuperController::class, 'storeCooperative'])
+    ->name('cooperatives.store');
 
-Route::get('/footer', function () {
-    return view('base.footer');
-});
+Route::delete('cooperatives/{coop}', [SuperController::class, 'destroyCooperative'])
+    ->name('cooperatives.destroy');
