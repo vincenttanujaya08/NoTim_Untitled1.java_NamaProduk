@@ -1,3 +1,5 @@
+@extends('base.layout')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1></h1>
+    <h1></h1>
+    <h1></h1>
+    <h1>hi</h1>
 </body>
 </html>
+@endsection

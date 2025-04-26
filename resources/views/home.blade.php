@@ -1,5 +1,12 @@
 @extends('base.layout')
 @section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
 <body class="bg-gray-100 text-gray-900">
     <main class="mt-8" id="home">
         <section class="bg-gray-800 text-white text-center py-20">
@@ -32,6 +39,7 @@
                 </div>
             </div>
         </section>
+        
     </main>
 </body>
 </html>
