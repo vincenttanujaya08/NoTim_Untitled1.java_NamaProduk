@@ -23,3 +23,12 @@ Route::get('/koperasi/dashboard', [KoperasiController::class, 'dashboard'])->nam
 Route::get('/field/dashboard', [FieldController::class, 'dashboard'])->name('field.dashboard');
 Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard');
 Route::get('/buyer/dashboard', [BuyerController::class, 'dashboard'])->name('buyer.dashboard');
+
+// crud koperasi
+Route::get('cooperatives/create', [SuperController::class, 'createCooperative'])
+    ->name('cooperatives.create');
+Route::post('cooperatives', [SuperController::class, 'storeCooperative'])
+    ->name('cooperatives.store');
+
+Route::delete('cooperatives/{coop}', [SuperController::class, 'destroyCooperative'])
+    ->name('cooperatives.destroy');

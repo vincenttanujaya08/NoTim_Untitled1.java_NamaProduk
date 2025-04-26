@@ -13,51 +13,66 @@ class DatabaseSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        // 1. Cooperative
-        $coopId = DB::table('cooperatives')->insertGetId([
-            'name'       => 'Koperasi Tani Makmur',
-            'address'    => 'Jl. Raya No.1, Desa Sukamaju',
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
+        //
+        // 1. Cooperatives (3 koperasi)
+        //
+        $coopData = [
+            ['Koperasi Tani Makmur', 'Jl. Raya No.1, Desa Sukamaju'],
+            ['Agro Sejahtera',       'Jl. Kebon Raya No.5, Desa Mekar'],
+            ['Pertanian Maju',       'Jl. Sawah Indah No.10, Desa Makmur'],
+        ];
+        $coopIds = [];
+        foreach ($coopData as list($name, $addr)) {
+            $coopIds[] = DB::table('cooperatives')->insertGetId([
+                'name'       => $name,
+                'address'    => $addr,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
 
+        //
         // 2. Roles
+        //
         $roles = ['Super Admin', 'Admin Koperasi', 'Petugas Lapangan', 'Petani', 'Pembeli'];
         $roleIds = [];
-        foreach ($roles as $name) {
-            $roleIds[$name] = DB::table('roles')->insertGetId([
-                'name'        => $name,
-                'description' => $name,
+        foreach ($roles as $r) {
+            $roleIds[$r] = DB::table('roles')->insertGetId([
+                'name'        => $r,
+                'description' => $r,
                 'created_at'  => $now,
                 'updated_at'  => $now,
             ]);
         }
 
-        // 3. Users & Farmers/Buyers
-        // 3a. Super Admin, Admin Koperasi, Petugas Lapangan
+        //
+        // 3. Users & Farmers / Buyers
+        //
+
+        // a) Owner + Admin Koperasi + Petugas Lapangan
         $baseUsers = [
             [
                 'name'           => 'Owner',
                 'email'          => 'owner@example.com',
                 'password'       => Hash::make('password'),
-                'phone'          => '0811111111',
+                'phone'          => '08110000000',
                 'cooperative_id' => null,
                 'role_id'        => $roleIds['Super Admin'],
             ],
             [
-                'name'           => 'Admin Koperasi',
-                'email'          => 'admin@koperasi.com',
+                'name'           => 'Admin Makmur',
+                'email'          => 'admintani@example.com',
                 'password'       => Hash::make('password'),
-                'phone'          => '0811111112',
-                'cooperative_id' => $coopId,
+                'phone'          => '081122233344',
+                'cooperative_id' => $coopIds[0],
                 'role_id'        => $roleIds['Admin Koperasi'],
             ],
             [
                 'name'           => 'Petugas Lapangan',
                 'email'          => 'petugas1@koperasi.com',
                 'password'       => Hash::make('password'),
-                'phone'          => '0811111113',
-                'cooperative_id' => $coopId,
+                'phone'          => '081133344455',
+                'cooperative_id' => $coopIds[0],
                 'role_id'        => $roleIds['Petugas Lapangan'],
             ],
         ];
@@ -69,56 +84,44 @@ class DatabaseSeeder extends Seeder
             ]));
         }
 
-        // 3b. Petani (5 orang)
-        for ($i = 1; $i <= 5; $i++) {
-            $email = "petani{$i}@example.com";
-            $uid   = DB::table('users')->insertGetId([
-                'name'           => "Petani {$i}",
-                'email'          => $email,
-                'password'       => Hash::make('password'),
-                'phone'          => '08111111' . (30 + $i),
-                'cooperative_id' => $coopId,
-                'role_id'        => $roleIds['Petani'],
-                'address'        => null,
-                'created_at'     => $now,
-                'updated_at'     => $now,
-            ]);
-            DB::table('farmers')->insert([
-                'user_id'        => $uid,
-                'cooperative_id' => $coopId,
-                'balance'        => 0,
-                'join_date'      => '2025-01-01',
-                'created_at'     => $now,
-                'updated_at'     => $now,
-            ]);
+        // b) Petani: 5 per koperasi
+        foreach ($coopIds as $idx => $coopId) {
+            for ($i = 1; $i <= 5; $i++) {
+                $email = "petani{$idx}_{$i}@example.com";
+                $uid   = DB::table('users')->insertGetId([
+                    'name'           => "Petani {$idx}-{$i}",
+                    'email'          => $email,
+                    'password'       => Hash::make('password'),
+                    'phone'          => '08123' . mt_rand(10000, 99999),
+                    'cooperative_id' => $coopId,
+                    'role_id'        => $roleIds['Petani'],
+                    'address'        => null,
+                    'created_at'     => $now,
+                    'updated_at'     => $now,
+                ]);
+                DB::table('farmers')->insert([
+                    'user_id'        => $uid,
+                    'cooperative_id' => $coopId,
+                    'balance'        => 0,
+                    'join_date'      => $now->toDateString(),
+                    'created_at'     => $now,
+                    'updated_at'     => $now,
+                ]);
+            }
         }
 
-        // 3c. Pembeli (2 orang)
-        $buyerData = [
-            [
-                'name'           => 'Pembeli X',
-                'email'          => 'buyerx@example.com',
-                'password'       => Hash::make('password'),
-                'phone'          => '0811111121',
-                'type'           => 'B2B',
-                'company_name'   => 'Restoran Sederhana',
-            ],
-            [
-                'name'           => 'Pembeli Y',
-                'email'          => 'buyery@example.com',
-                'password'       => Hash::make('password'),
-                'phone'          => '0811111122',
-                'type'           => 'INDIVIDUAL',
-                'company_name'   => null,
-            ],
+        // c) Pembeli: 2 orang
+        $buyers = [
+            ['Pembeli A', 'buyerA@example.com', 'INDIVIDUAL', null],
+            ['Restoran B', 'buyerB@example.com', 'B2B', 'Restoran Makmur'],
         ];
-        foreach ($buyerData as $b) {
+        foreach ($buyers as list($name, $email, $type, $company)) {
             $uid = DB::table('users')->insertGetId([
-                'name'           => $b['name'],
-                'email'          => $b['email'],
-                'password'       => $b['password'],
-                'phone'          => $b['phone'],
-                'cooperative_id' => $coopId,
+                'name'           => $name,
+                'email'          => $email,
+                'password'       => Hash::make('password'),
+                'phone'          => '08124' . mt_rand(10000, 99999),
+                'cooperative_id' => $coopIds[0],
                 'role_id'        => $roleIds['Pembeli'],
                 'address'        => null,
                 'created_at'     => $now,
@@ -126,164 +129,177 @@ class DatabaseSeeder extends Seeder
             ]);
             DB::table('buyers')->insert([
                 'user_id'      => $uid,
-                'type'         => $b['type'],
-                'company_name' => $b['company_name'],
+                'type'         => $type,
+                'company_name' => $company,
                 'created_at'   => $now,
                 'updated_at'   => $now,
             ]);
         }
 
-        // 4. Commodities & Stocks
+        //
+        // 4. Commodities
+        //
         $commodities = [
-            ['name' => 'Beras', 'unit' => 'kg'],
-            ['name' => 'Kopi',  'unit' => 'kg'],
-            ['name' => 'Jagung', 'unit' => 'kg'],
+            ['Beras', 'kg'],
+            ['Kopi', 'kg'],
+            ['Jagung', 'kg'],
+            ['Kentang', 'kg'],
+            ['Bawang Merah', 'kg'],
         ];
         $commodityIds = [];
-        foreach ($commodities as $c) {
-            $commodityIds[$c['name']] = DB::table('commodities')->insertGetId([
-                'name'       => $c['name'],
-                'unit'       => $c['unit'],
+        foreach ($commodities as list($name, $unit)) {
+            $commodityIds[$name] = DB::table('commodities')->insertGetId([
+                'name'       => $name,
+                'unit'       => $unit,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
         }
+
+        //
+        // 5. Commodity Stocks (global) &gt;0
+        //
         foreach ($commodityIds as $cid) {
             foreach (['A', 'B', 'C'] as $grade) {
                 DB::table('commodity_stocks')->insert([
                     'commodity_id' => $cid,
                     'grade'        => $grade,
-                    'quantity'     => 0,
+                    'quantity'     => rand(10, 100),
                     'created_at'   => $now,
                     'updated_at'   => $now,
                 ]);
             }
         }
 
-        // 5. Harvests (contoh panen awal)
-        $harvests = [
-            ['email' => 'petani1@example.com', 'comm' => 'Beras', 'grade' => 'A', 'qty' => 100, 'price' => 5000, 'date' => '2025-02-01'],
-            ['email' => 'petani2@example.com', 'comm' => 'Beras', 'grade' => 'B', 'qty' => 50, 'price' => 4000, 'date' => '2025-02-01'],
-            ['email' => 'petani3@example.com', 'comm' => 'Kopi', 'grade' => 'A', 'qty' => 30, 'price' => 30000, 'date' => '2025-02-02'],
-        ];
-        foreach ($harvests as $h) {
-            $user = DB::table('users')->where('email', $h['email'])->first();
-            $farm = DB::table('farmers')->where('user_id', $user->id)->first();
-            $total = $h['qty'] * $h['price'];
+        //
+        // 6. Harvests: setiap koperasi men‐panen tiap komoditas–grade
+        //
+        foreach ($coopIds as $coopId) {
+            foreach ($commodityIds as $cid) {
+                foreach (['A', 'B', 'C'] as $grade) {
+                    $qty   = rand(50, 150);
+                    $price = rand(4000, 7000);
+                    $total = $qty * $price;
+                    $farm  = DB::table('farmers')
+                        ->where('cooperative_id', $coopId)
+                        ->inRandomOrder()->first();
 
-            DB::table('harvests')->insert([
-                'farmer_id'     => $farm->id,
-                'commodity_id'  => $commodityIds[$h['comm']],
-                'grade'         => $h['grade'],
-                'quantity'      => $h['qty'],
-                'unit_price'    => $h['price'],
-                'total_amount'  => $total,
-                'harvest_date'  => $h['date'],
-                'created_at'    => $now,
-                'updated_at'    => $now,
-            ]);
+                    DB::table('harvests')->insert([
+                        'farmer_id'    => $farm->id,
+                        'commodity_id' => $cid,
+                        'grade'        => $grade,
+                        'quantity'     => $qty,
+                        'unit_price'   => $price,
+                        'total_amount' => $total,
+                        'harvest_date' => $now->toDateString(),
+                        'created_at'   => $now,
+                        'updated_at'   => $now,
+                    ]);
 
-            // update stok & saldo
-            DB::table('commodity_stocks')
-                ->where('commodity_id', $commodityIds[$h['comm']])
-                ->where('grade', $h['grade'])
-                ->increment('quantity', $h['qty']);
+                    DB::table('commodity_stocks')
+                        ->where('commodity_id', $cid)
+                        ->where('grade', $grade)
+                        ->increment('quantity', $qty);
 
-            DB::table('farmers')
-                ->where('id', $farm->id)
-                ->increment('balance', $total);
+                    DB::table('farmers')
+                        ->where('id', $farm->id)
+                        ->increment('balance', $total);
+                }
+            }
         }
 
-        // 6. Orders, Order Items & Payments
-        // Order 1: Partial payment
-        $buyerX = DB::table('buyers')
-            ->where('user_id', DB::table('users')->where('email', 'buyerx@example.com')->value('id'))
-            ->first();
+        //
+        // 7. Orders & Sales: 3 order acak bisnis penuh bayar
+        //
+        // Ambil semua user_id buyers
+        $allBuyers = DB::table('buyers')->pluck('user_id')->toArray();
+        shuffle($allBuyers);
 
-        $order1Id = DB::table('orders')->insertGetId([
-            'buyer_id'       => $buyerX->id,
-            'order_date'     => '2025-03-01',
-            'total_amount'   => 295000,
-            'payment_status' => 'PARTIAL',
-            'due_date'       => '2025-03-15',
-            'created_at'     => $now,
-            'updated_at'     => $now,
-        ]);
+        // Batasi maksimal 3 order, tapi jangan melebihi jumlah buyer
+        $toProcess = array_slice($allBuyers, 0, min(3, count($allBuyers)));
 
-        $items1 = [
-            ['comm' => 'Beras', 'grade' => 'A', 'qty' => 20, 'price' => 6000],
-            ['comm' => 'Kopi', 'grade' => 'A', 'qty' => 5, 'price' => 35000],
-        ];
-        foreach ($items1 as $it) {
-            $cid   = $commodityIds[$it['comm']];
-            $total = $it['qty'] * $it['price'];
+        foreach ($toProcess as $buyerUserId) {
+            $buyer = DB::table('buyers')->where('user_id', $buyerUserId)->first();
 
-            DB::table('order_items')->insert([
-                'order_id'     => $order1Id,
-                'commodity_id' => $cid,
-                'grade'        => $it['grade'],
-                'quantity'     => $it['qty'],
-                'price'        => $it['price'],
-                'total_price'  => $total,
+            // Buat header order (sementara total_amount=0, nanti diupdate)
+            $orderId = DB::table('orders')->insertGetId([
+                'buyer_id'       => $buyer->id,
+                'order_date'     => $now->toDateString(),
+                'total_amount'   => 0,
+                'payment_status' => 'PAID',
+                'due_date'       => null,
+                'created_at'     => $now,
+                'updated_at'     => $now,
+            ]);
+
+            $orderTotal = 0;
+
+            // Ambil 2 komoditas random
+            $bulkCommKeys = array_keys($commodityIds);
+            shuffle($bulkCommKeys);
+            $selectedComms = array_slice($bulkCommKeys, 0, 2);
+
+            foreach ($selectedComms as $commName) {
+                $cid   = $commodityIds[$commName];
+                $grade = ['A', 'B', 'C'][array_rand(['A', 'B', 'C'])];
+
+                // Cek stok global untuk grade ini
+                $stockAvail = DB::table('commodity_stocks')
+                    ->where('commodity_id', $cid)
+                    ->where('grade', $grade)
+                    ->value('quantity');
+
+                if ($stockAvail < 1) {
+                    continue; // skip jika kosong
+                }
+
+                // Qty pesanan random antara 1 dan min(10, stokAvail)
+                $qty = rand(1, min(10, $stockAvail));
+
+                // Ambil unit_price dari salah satu panen
+                $unitPrice = DB::table('harvests')
+                    ->where('commodity_id', $cid)
+                    ->where('grade', $grade)
+                    ->inRandomOrder()
+                    ->value('unit_price');
+
+                $totalPrice = $qty * $unitPrice;
+                $orderTotal += $totalPrice;
+
+                // Insert order item
+                DB::table('order_items')->insert([
+                    'order_id'     => $orderId,
+                    'commodity_id' => $cid,
+                    'grade'        => $grade,
+                    'quantity'     => $qty,
+                    'price'        => $unitPrice,
+                    'total_price'  => $totalPrice,
+                    'created_at'   => $now,
+                    'updated_at'   => $now,
+                ]);
+
+                // Kurangi stok global
+                DB::table('commodity_stocks')
+                    ->where('commodity_id', $cid)
+                    ->where('grade', $grade)
+                    ->decrement('quantity', $qty);
+            }
+
+            // Update total_amount pada header order
+            DB::table('orders')
+                ->where('id', $orderId)
+                ->update(['total_amount' => $orderTotal]);
+
+            // Catat payment
+            DB::table('order_payments')->insert([
+                'order_id'     => $orderId,
+                'payment_date' => $now->toDateString(),
+                'amount'       => $orderTotal,
+                'method'       => 'Cash',
+                'note'         => null,
                 'created_at'   => $now,
                 'updated_at'   => $now,
             ]);
-
-            DB::table('commodity_stocks')
-                ->where('commodity_id', $cid)
-                ->where('grade', $it['grade'])
-                ->decrement('quantity', $it['qty']);
         }
-
-        DB::table('order_payments')->insert([
-            'order_id'    => $order1Id,
-            'payment_date' => '2025-03-10',
-            'amount'      => 150000,
-            'method'      => 'Transfer',
-            'note'        => null,
-            'created_at'  => $now,
-            'updated_at'  => $now,
-        ]);
-
-        // Order 2: Paid in full
-        $buyerY = DB::table('buyers')
-            ->where('user_id', DB::table('users')->where('email', 'buyery@example.com')->value('id'))
-            ->first();
-
-        $order2Id = DB::table('orders')->insertGetId([
-            'buyer_id'       => $buyerY->id,
-            'order_date'     => '2025-03-05',
-            'total_amount'   => 50000,
-            'payment_status' => 'PAID',
-            'due_date'       => null,
-            'created_at'     => $now,
-            'updated_at'     => $now,
-        ]);
-
-        DB::table('order_items')->insert([
-            'order_id'     => $order2Id,
-            'commodity_id' => $commodityIds['Beras'],
-            'grade'        => 'B',
-            'quantity'     => 10,
-            'price'        => 5000,
-            'total_price'  => 50000,
-            'created_at'   => $now,
-            'updated_at'   => $now,
-        ]);
-
-        DB::table('commodity_stocks')
-            ->where('commodity_id', $commodityIds['Beras'])
-            ->where('grade', 'B')
-            ->decrement('quantity', 10);
-
-        DB::table('order_payments')->insert([
-            'order_id'    => $order2Id,
-            'payment_date' => '2025-03-05',
-            'amount'      => 50000,
-            'method'      => 'Cash',
-            'note'        => null,
-            'created_at'  => $now,
-            'updated_at'  => $now,
-        ]);
     }
 }
