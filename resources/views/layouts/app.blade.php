@@ -1,80 +1,101 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <title>@yield('title','PanenHub')</title>
+    {{-- Tailwind CSS --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- Custom component styles --}}
+    <style type="text/tailwindcss">
+        @layer components {
+      .hamburger-line {
+        @apply w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center;
+      }
+      .sidebar-link {
+        @apply px-6 py-4 text-gray-200 hover:bg-slate-700 hover:text-white
+               transition-colors duration-200 border-l-4 border-transparent
+               hover:border-blue-500;
+      }
+      .sidebar-link.active {
+        @apply bg-slate-700 border-blue-500;
+      }
+    }
+  </style>
+    @stack('head') {{-- additional head tags --}}
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
+
+<body class="bg-gray-100 transition-all duration-300">
+
+    {{-- Navbar --}}
+    <nav class="bg-slate-800 text-white p-4 shadow-md fixed w-full z-50">
+        <div class="flex items-center pl-4">
+            <button id="hamburger"
+                class="flex flex-col justify-between h-6 w-6 focus:outline-none mr-4 group">
+                <span class="hamburger-line group-[.active]:translate-y-[5.8px] group-[.active]:rotate-[23deg]"></span>
+                <span class="hamburger-line group-[.active]:opacity-0"></span>
+                <span class="hamburger-line group-[.active]:-translate-y-[5.8px] group-[.active]:-rotate-[23deg]"></span>
+            </button>
+            <div class="text-3xl font-bold">@yield('brand','PanenHub')</div>
+        </div>
+    </nav>
+
+    {{-- Sidebar --}}
+    <div id="sidebar"
+        class="fixed top-0 left-0 h-full w-64 bg-slate-900 shadow-lg z-40
+              transform -translate-x-full transition-transform duration-300 ease-in-out pt-16">
+        <nav class="flex flex-col">
+            <a href="{{ route('super.dashboard') }}" class="sidebar-link">
+                Dashboard
+            </a>
+            <a href="{{ route('cooperatives.create') }}" class="sidebar-link">
+                Tambah Koperasi
+            </a>
+            <form action="{{ route('logout') }}" method="POST" class="mt-auto">
+                @csrf
+                <button type="submit" class="w-full text-left sidebar-link">
+                    Logout
                 </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
+            </form>
         </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
     </div>
+
+    {{-- Overlay --}}
+    <div id="overlay"
+        class="fixed inset-0 bg-black/50 z-30 opacity-0 invisible
+              transition-opacity duration-300"></div>
+
+    {{-- Main Content --}}
+    <main id="content" class="pt-16 pl-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto p-4">
+            @yield('content')
+        </div>
+    </main>
+
+    {{-- Sidebar toggle script --}}
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('translate-x-0');
+            overlay.classList.toggle('opacity-100');
+            overlay.classList.toggle('visible');
+            overlay.classList.toggle('invisible');
+        });
+
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('translate-x-0');
+            overlay.classList.remove('opacity-100', 'visible');
+            overlay.classList.add('invisible');
+        });
+    </script>
+
+    @stack('scripts') {{-- additional page scripts --}}
 </body>
+
 </html>
