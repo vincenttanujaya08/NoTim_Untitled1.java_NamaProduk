@@ -58,12 +58,12 @@
     <div id="overlay" class="fixed inset-0 bg-black/50 z-30 opacity-0 invisible transition-opacity duration-300"></div>
 
     <!-- Main Content -->
-    <main id="content" class="pt-16 px-4 min-h-screen transition-all duration-300">
+    {{-- <main id="content" class="pt-16 px-4 min-h-screen transition-all duration-300">
         <div class="container mx-auto py-8">
             <h1 class="text-3xl font-bold text-slate-800 mb-4">Welcome to My Website</h1>
             <p class="text-slate-600">Click the hamburger menu to see the diagonal cross animation.</p>
         </div>
-    </main>
+    </main> --}}
 
     <script>
         const hamburger = document.getElementById('hamburger');
