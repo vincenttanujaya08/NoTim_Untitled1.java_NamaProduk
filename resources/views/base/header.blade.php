@@ -27,12 +27,12 @@
         <div class="flex items-center pl-4">
             <!-- Hamburger Button di Kiri -->
             <button id="hamburger" class="flex flex-col justify-between h-6 w-6 focus:outline-none mr-4 group">
-                <span class="hamburger-line group-[.active]:translate-y-[11px] group-[.active]:rotate-[45deg]"></span>
+                <span class="hamburger-line group-[.active]:translate-y-[5.8px] group-[.active]:rotate-[23deg]"></span>
                 <span class="hamburger-line group-[.active]:opacity-0"></span>
-                <span class="hamburger-line group-[.active]:-translate-y-[11px] group-[.active]:-rotate-[45deg]"></span>
+                <span class="hamburger-line group-[.active]:-translate-y-[5.8px] group-[.active]:-rotate-[23deg]"></span>
             </button>
             
-            <div class="text-xl font-bold">Panen Hub</div>
+            <div class="text-3xl font-bold">Panen Hub</div>
         </div>
     </nav>
 
