@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title','PanenHub')</title>
-    {{-- Tailwind CSS --}}
+    {{-- Tailwind CSS and Alpine --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
     {{-- Custom component styles --}}
     <style type="text/tailwindcss">
@@ -47,11 +48,14 @@
         class="fixed top-0 left-0 h-full w-64 bg-slate-900 shadow-lg z-40
               transform -translate-x-full transition-transform duration-300 ease-in-out pt-16">
         <nav class="flex flex-col">
-            <a href="{{ route('super.dashboard') }}" class="sidebar-link">
+            <a href="{{ route('buyer.dashboard') }}" class="sidebar-link">
                 Dashboard
             </a>
-            <a href="{{ route('cooperatives.create') }}" class="sidebar-link">
-                Tambah Koperasi
+            <a href="{{ route('buyer.katalog') }}" class="sidebar-link">
+                Katalog
+            </a>
+            <a href="{{ route('buyer.orders.index') }}" class="sidebar-link">
+                Pesanan Saya
             </a>
             <form action="{{ route('logout') }}" method="POST" class="mt-auto">
                 @csrf

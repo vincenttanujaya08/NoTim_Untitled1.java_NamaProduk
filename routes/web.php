@@ -64,3 +64,40 @@ Route::post('/koperasi/orders/{order}/schedule', [KoperasiController::class, 'or
 // Laporan
 Route::get('/koperasi/reports/harvest', [KoperasiController::class, 'reportHarvest'])->name('koperasi.reports.harvest');
 Route::get('/koperasi/reports/finance', [KoperasiController::class, 'reportFinance'])->name('koperasi.reports.finance');
+
+
+
+
+
+
+// Dashboard Buyer
+Route::get('/buyer/dashboard', [BuyerController::class, 'dashboard'])
+    ->name('buyer.dashboard');
+
+// Katalog Stok
+Route::get('/buyer/katalog', [BuyerController::class, 'katalog'])
+    ->name('buyer.katalog');
+
+// Tambah ke cart (session-based atau DB)
+Route::post('/buyer/cart/add', [BuyerController::class, 'addToCart'])
+    ->name('buyer.cart.add');
+
+// Lihat Cart & Checkout Form
+Route::get('/buyer/checkout', [BuyerController::class, 'checkoutForm'])
+    ->name('buyer.checkout.form');
+Route::post('/buyer/checkout', [BuyerController::class, 'processCheckout'])
+    ->name('buyer.checkout.process');
+
+// Riwayat & Detail Pesanan
+Route::get('/buyer/orders', [BuyerController::class, 'ordersIndex'])
+    ->name('buyer.orders.index');
+
+Route::get('/buyer/orders/{order}', [BuyerController::class, 'ordersShow'])
+    ->name('buyer.orders.show');
+
+// Repeat Order (copy ke cart)
+Route::post('/buyer/orders/{order}/repeat', [BuyerController::class, 'repeatOrder'])
+    ->name('buyer.orders.repeat');
+
+Route::post('/buyer/orders/{order}/pay', [BuyerController::class, 'payOrder'])
+    ->name('buyer.orders.pay');

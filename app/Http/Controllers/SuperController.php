@@ -26,7 +26,7 @@ class SuperController extends Controller
 
     public function createCooperative()
     {
-        return view('createcoop');
+        return view('koperasi.createcoop');
     }
 
     public function storeCooperative(Request $request)
